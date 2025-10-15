@@ -72,11 +72,11 @@ class EmotionClass:
         6. friendly: 用于表达友善、亲切的情绪
 
         示例:
-        - "我特别生气！" -> ({"feeling": "angry", "score": "8"})
-        - "今天天气真好" -> ({"feeling": "cheerful", "score": "2"})
-        - "随便吧，都可以" -> ({"feeling": "default", "score": "5"})
-        - "我很难过" -> ({"feeling": "depressed", "score": "9"})
-        - "谢谢你的帮助" -> ({"feeling": "friendly", "score": "1"})
+        - "我特别生气！" -> {{"feeling": "angry", "score": "8"}}
+        - "今天天气真好" -> {{"feeling": "cheerful", "score": "2"}}
+        - "随便吧，都可以" -> {{"feeling": "default", "score": "5"}}
+        - "我很难过" -> {{"feeling": "depressed", "score": "9"}}
+        - "谢谢你的帮助" -> {{"feeling": "friendly", "score": "1"}}
 
         用户输入内容: {input}
         请根据以上规则分析情绪并返回相应的feeling和score。

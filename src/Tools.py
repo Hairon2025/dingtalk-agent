@@ -497,6 +497,39 @@ def ModifySchedule(search: ScheduleModify) -> str:
         return f"修改日程失败: {error_message}"
 
 @tool
+def DelSchedule(query: DeleteSchedule) -> str:
+    """当用户要求删除日程时调用此工具
+
+    Args:
+        query: 用户要删除的日程信息
+
+    Returns:
+        str: 返回给用户确认要具体删除的日程信息
+    """
+    # 创建 ScheduleSearch 对象并转换为字典
+    search_params = ScheduleSearch()
+    # 包装成正确的格式：添加 search 字段
+    search_dict = {
+        "search": search_params.model_dump()
+    }
+    # 使用 invoke 方法调用 SearchSchedule
+    searchResult = SearchSchedule.invoke(search_dict)
+    events = searchResult.get('events', [])
+    if not events:
+        return "您的日程空空如也"
+    if len(events) > 1:
+        orginOder = f"description: {query.description}, summary: {query.summary}"
+        returnID = FindPreciseOrder(orginOder, events)
+        print(returnID)
+        eventid = returnID.id
+        if not eventid:
+            return "您的日程似乎不存在，是否输入有误？"
+    else:
+        eventid = events[0]['id']
+    print("要删除的日程ID：", eventid)
+    return f"记录下日程id,然后询问用户，是否确认要删除日程 {eventid}"
+
+@tool
 def ConfirmDelSchedule(query: ScheduleDel) -> str:
     """当用户确认删除日程信息时调用此工具
 

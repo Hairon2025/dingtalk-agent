@@ -71,16 +71,19 @@ class PromptClass:
         3. 你可以选择不回答任何可能引起争议的问题。
         你的行为: {who_you_are}
         """
-        def Prompt_Structure(self):
-            feeling = self.feeling if self.feeling["feeling"] in self.MOODS else {"feeling": "default", "score": 5}
-            print("feeling", feeling)
-            memorykey = self.memorykey if self.memorykey else "chat_history"
-            self.Prompt = ChatPromptTemplate.from_messages([
+        
+    def Prompt_Structure(self):
+        feeling = self.feeling if self.feeling["feeling"] in self.MOODS else {"feeling": "default", "score": 5}
+        print("feeling", feeling)
+        memorykey = self.memorykey if self.memorykey else "chat_history"
+        self.Prompt = ChatPromptTemplate.from_messages(
+            [
                 ("system", self.SystemPrompt),
                 MessagesPlaceholder(variable_name=memorykey),
                 ("user", "{input}"),
                 MessagesPlaceholder(variable_name="agent_scratchpad"),
-            ])
-            return self.Prompt.partial(
-                who_you_are=self.MOODS[feeling["feeling"]]["roloSet"], feelScore=feeling["score"]
-            )
+            ]
+        )
+        return self.Prompt.partial(
+            who_you_are=self.MOODS[feeling["feeling"]]["roloSet"], feelScore=feeling["score"]
+        )

@@ -11,13 +11,13 @@ def setup_logging():
     """设置日志配置"""
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', # 日志格式
         handlers=[
-            logging.StreamHandler(),
-            logging.FileHandler("dingtalk_connection.log")
+            logging.StreamHandler(),  # 控制台处理器
+            logging.FileHandler("dingtalk_connection.log") # 文件处理器，日志将保存到文件
         ]
     )
-    return logging.getLogger("DingTalk")
+    return logging.getLogger("DingTalk") # 返回指定名称的日志记录器
         
 class EchoTextHandler(ChatbotHandler):
     """
@@ -36,11 +36,11 @@ class EchoTextHandler(ChatbotHandler):
         Returns:
             元组: 状态码和状态消息
         """
-        logger = setup_logging()
+        logger = setup_logging()  # 初始化日志记录器
         # 从回调数据中提取聊天消息
         incoming_message = ChatbotMessage.from_dict(callback.data)
-        logger.info(incoming_message)
-        logger.info(callback.data)
+        logger.info(incoming_message)   # 记录接收到的消息对象
+        logger.info(callback.data)      # 记录原始回调数据
 
         # 提取消息文本内容并去除前后空白
         text = incoming_message.text.content.strip()
